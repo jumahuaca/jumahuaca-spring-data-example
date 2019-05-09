@@ -61,7 +61,7 @@ public class SpringDataRepositoryIntegrationTests {
 
 	@Autowired
 	private UvaExchangeRepository repository;
-
+	
 	@Test
 	public void testGeneric() {
 		System.out.println("Hello:" + repository);
