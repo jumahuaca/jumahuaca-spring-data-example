@@ -1,13 +1,13 @@
-package org.jumahuaca.examples.springdata.controller;
+package org.jumahuaca.examples.controller;
 
-import static org.jumahuaca.examples.springdata.controller.PathConstants.RESOURCE_VERSION;
+import static org.jumahuaca.examples.controller.PathConstants.RESOURCE_VERSION;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-import org.jumahuaca.examples.springdata.entity.UVAExchange;
-import org.jumahuaca.examples.springdata.repository.UvaExchangeRepository;
+import org.jumahuaca.examples.entity.UVAExchange;
+import org.jumahuaca.examples.repository.UvaExchangeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

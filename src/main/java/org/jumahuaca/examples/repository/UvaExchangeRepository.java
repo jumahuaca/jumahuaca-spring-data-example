@@ -1,8 +1,8 @@
-package org.jumahuaca.examples.springdata.repository;
+package org.jumahuaca.examples.repository;
 
 import java.time.LocalDate;
 
-import org.jumahuaca.examples.springdata.entity.UVAExchange;
+import org.jumahuaca.examples.entity.UVAExchange;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

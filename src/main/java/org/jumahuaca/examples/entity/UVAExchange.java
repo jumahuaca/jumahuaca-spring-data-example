@@ -1,4 +1,4 @@
-package org.jumahuaca.examples.springdata.entity;
+package org.jumahuaca.examples.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;

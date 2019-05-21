@@ -1,4 +1,4 @@
-package org.jumahuaca.examples.springdata.app;
+package org.jumahuaca.examples.app;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -9,8 +9,8 @@ import java.time.Month;
 import java.util.List;
 import java.util.Optional;
 
-import org.jumahuaca.examples.springdata.entity.UVAExchange;
-import org.jumahuaca.examples.springdata.repository.UvaExchangeRepository;
+import org.jumahuaca.examples.entity.UVAExchange;
+import org.jumahuaca.examples.repository.UvaExchangeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -61,11 +61,6 @@ public class SpringDataRepositoryIntegrationTests {
 
 	@Autowired
 	private UvaExchangeRepository repository;
-	
-	@Test
-	public void testGeneric() {
-		System.out.println("Hello:" + repository);
-	}
 
 	@BeforeEach
 	public void setup() throws Exception {

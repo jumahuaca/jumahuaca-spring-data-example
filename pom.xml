@@ -10,9 +10,9 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>org.jumahuaca.examples</groupId>
-	<artifactId>springdatauvaapi</artifactId>
+	<artifactId>springuvaapi</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>jumahuaca-spring-data-example</name>
+	<name>jumahuaca-spring-example</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>

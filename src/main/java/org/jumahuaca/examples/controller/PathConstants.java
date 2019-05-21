@@ -1,4 +1,4 @@
-package org.jumahuaca.examples.springdata.controller;
+package org.jumahuaca.examples.controller;
 
 public interface PathConstants {
 	
