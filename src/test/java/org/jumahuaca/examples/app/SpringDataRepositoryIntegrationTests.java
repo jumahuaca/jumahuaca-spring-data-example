@@ -11,9 +11,8 @@ import java.util.Optional;
 
 import org.jumahuaca.examples.entity.UVAExchange;
 import org.jumahuaca.examples.repository.UvaExchangeRepository;
+import org.jumahuaca.util.IntegrationTest;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -71,8 +70,7 @@ public class SpringDataRepositoryIntegrationTests {
 		entityManager.flush();
 	}
 
-	@Test
-	@Tag("integration")
+	@IntegrationTest
 	public void testFindExchangeByDayShouldWork() throws SQLException {
 		LocalDate param = LocalDate.parse(testDay1);
 		Optional<UVAExchange> result = repository.findById(param);
@@ -81,16 +79,14 @@ public class SpringDataRepositoryIntegrationTests {
 		assertThat(result.get().getRate()).isEqualTo(BigDecimal.valueOf(testRate1));
 	}
 
-	@Test
-	@Tag("integration")
+	@IntegrationTest
 	public void testFindExchangeByDayShouldNotFind() throws SQLException {
 		LocalDate param = LocalDate.parse(testDayError1);
 		Optional<UVAExchange> result = repository.findById(param);
 		assertThat(result.isPresent()).isFalse();
 	}
 
-	@Test
-	@Tag("integration")
+	@IntegrationTest
 	public void testSearchAllShouldWork() throws SQLException {
 		List<UVAExchange> result = (List<UVAExchange>) repository.findAll();
 		assertThat(result.size()).isEqualTo(SIZE_SELECT_ALL);
@@ -100,8 +96,7 @@ public class SpringDataRepositoryIntegrationTests {
 		assertThat(result.get(1).getRate()).isEqualTo(BigDecimal.valueOf(testRate2));
 	}
 
-	@Test
-	@Tag("integration")
+	@IntegrationTest
 	public void testCreateShouldWork() throws SQLException {
 		UVAExchange toCreate = repository
 				.save(new UVAExchange(LocalDate.parse(testDay3), BigDecimal.valueOf(testRate3)));
@@ -110,8 +105,7 @@ public class SpringDataRepositoryIntegrationTests {
 		assertThat(toCreate.getRate()).isEqualTo(BigDecimal.valueOf(testRate3));
 	}
 
-	@Test
-	@Tag("integration")
+	@IntegrationTest
 	public void testUpdateShouldWork() throws SQLException {
 		UVAExchange toCreate = repository
 				.save(new UVAExchange(LocalDate.parse(testDay1), BigDecimal.valueOf(testRate1)));
@@ -120,8 +114,7 @@ public class SpringDataRepositoryIntegrationTests {
 		assertThat(toCreate.getRate()).isEqualTo(BigDecimal.valueOf(testRate1));
 	}
 
-	@Test
-	@Tag("integration")
+	@IntegrationTest
 	public void testDeleteShouldWork() throws SQLException {
 		repository.delete(new UVAExchange(LocalDate.parse(testDay1), BigDecimal.valueOf(testRate1)));
 	}
