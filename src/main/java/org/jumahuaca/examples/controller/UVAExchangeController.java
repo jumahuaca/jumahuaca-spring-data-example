@@ -1,6 +1,15 @@
 package org.jumahuaca.examples.controller;
 
 import static org.jumahuaca.examples.controller.PathConstants.RESOURCE_VERSION;
+import static org.jumahuaca.examples.controller.PathConstants.UVA_EXCHANGE_DAY_PARAM;
+import static org.jumahuaca.examples.controller.PathConstants.UVA_EXCHANGE_GET_ALL_PATH;
+import static org.jumahuaca.examples.controller.PathConstants.UVA_EXCHANGE_GET_ONE_PARAMS;
+import static org.jumahuaca.examples.controller.PathConstants.UVA_EXCHANGE_MONTH_PARAM;
+import static org.jumahuaca.examples.controller.PathConstants.UVA_EXCHANGE_POST_PATH;
+import static org.jumahuaca.examples.controller.PathConstants.UVA_EXCHANGE_PUT_PATH;
+import static org.jumahuaca.examples.controller.PathConstants.UVA_EXCHANGE_REMOVE_PATH;
+import static org.jumahuaca.examples.controller.PathConstants.UVA_EXCHANGE_ROOT_PATH;
+import static org.jumahuaca.examples.controller.PathConstants.UVA_EXCHANGE_YEAR_PARAM;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -18,26 +27,26 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(RESOURCE_VERSION+"exchange")
+@RequestMapping(RESOURCE_VERSION+UVA_EXCHANGE_ROOT_PATH)
 public class UVAExchangeController {
 	
 	@Autowired
 	private UvaExchangeRepository uvaExchangeRepository;
 	
-	@RequestMapping(method = RequestMethod.GET, value = "all")
+	@RequestMapping(method = RequestMethod.GET, value = UVA_EXCHANGE_GET_ALL_PATH)
 	public ResponseEntity<List<UVAExchange>> getAllExchanges() {
 		List<UVAExchange> result = (List<UVAExchange>) uvaExchangeRepository.findAll();
 		if(result!=null && !result.isEmpty()) {
 			return new ResponseEntity<List<UVAExchange>>(result, HttpStatus.OK);
-		}else if(result.isEmpty()) {
+		}else if(result!=null && result.isEmpty()) {
 			return new ResponseEntity<List<UVAExchange>>(HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<List<UVAExchange>>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, value = "/{year}/{month}/{day}")
-	public ResponseEntity<UVAExchange> getExchange(@PathVariable("year") Integer year, @PathVariable("month") Integer month,
-			@PathVariable("day") Integer day) {
+	@RequestMapping(method = RequestMethod.GET, value = UVA_EXCHANGE_GET_ONE_PARAMS)
+	public ResponseEntity<UVAExchange> getExchange(@PathVariable(UVA_EXCHANGE_YEAR_PARAM) Integer year, @PathVariable(UVA_EXCHANGE_MONTH_PARAM) Integer month,
+			@PathVariable(UVA_EXCHANGE_DAY_PARAM) Integer day) {
 		LocalDate date = LocalDate.of(year, month, day);
 		Optional<UVAExchange> result = uvaExchangeRepository.findById(date);
 		if(result.isPresent()) {
@@ -47,7 +56,7 @@ public class UVAExchangeController {
 		}		
 	}
 	
-	@RequestMapping(method = RequestMethod.POST, value = "")
+	@RequestMapping(method = RequestMethod.POST, value = UVA_EXCHANGE_POST_PATH)
 	public ResponseEntity<UVAExchange> post(@RequestBody UVAExchange exchange) {
 		try {
 			UVAExchange result = uvaExchangeRepository.save(exchange);
@@ -58,7 +67,7 @@ public class UVAExchangeController {
 		
 	}
 	
-	@RequestMapping(method = RequestMethod.PUT, value = "")
+	@RequestMapping(method = RequestMethod.PUT, value = UVA_EXCHANGE_PUT_PATH)
 	public ResponseEntity<UVAExchange> put(@RequestBody UVAExchange exchange) {
 		try {
 			UVAExchange result = uvaExchangeRepository.save(exchange);
@@ -69,7 +78,7 @@ public class UVAExchangeController {
 		
 	}
 	
-	@RequestMapping(method = RequestMethod.DELETE, value = "")
+	@RequestMapping(method = RequestMethod.DELETE, value = UVA_EXCHANGE_REMOVE_PATH)
 	public ResponseEntity<String> remove(@RequestBody UVAExchange exchange) {
 		try {
 			uvaExchangeRepository.delete(exchange);

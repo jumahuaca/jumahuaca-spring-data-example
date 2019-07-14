@@ -43,6 +43,14 @@ public class UVAExchange implements Serializable{
 	public BigDecimal getRate() {
 		return rate;
 	}
+	
+	public void setDate(LocalDate date) {
+		this.date = date;
+	}
+
+	public void setRate(BigDecimal rate) {
+		this.rate = rate;
+	}
 
 	@Override
 	public int hashCode() {
