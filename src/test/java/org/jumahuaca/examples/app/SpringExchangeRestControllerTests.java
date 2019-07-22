@@ -28,7 +28,7 @@ import org.jumahuaca.examples.controller.UVAExchangeController;
 import org.jumahuaca.examples.entity.UVAExchange;
 import org.jumahuaca.examples.repository.UvaExchangeRepository;
 import org.jumahuaca.extensions.SpringControllerCrudExtension;
-import org.jumahuaca.extensions.SpringControllerCrudExtensionHelper;
+import org.jumahuaca.extensions.HttpWebServiceDoubleHelper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -44,7 +44,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(UVAExchangeController.class)
-public class SpringExchangeRestControllerTests implements SpringControllerCrudExtensionHelper<UVAExchange>{
+public class SpringExchangeRestControllerTests implements HttpWebServiceDoubleHelper<UVAExchange>{
 
 	private static final String PREFIX = RESOURCE_VERSION + UVA_EXCHANGE_ROOT_PATH;
 
@@ -234,6 +234,44 @@ public class SpringExchangeRestControllerTests implements SpringControllerCrudEx
 	@Override
 	public void stubRepositoryDeleteError(UVAExchange mockedResult) {
 		doThrow(RuntimeException.class).when(uvaExchangeRepository).delete(mockedResult);
+	}
+
+	@Override
+	public void stubRepositoryFindByIdError(UVAExchange mockedResult) {
+		throw new UnsupportedOperationException();		
+	}
+
+	@Override
+	public void stubRepositoryCreateOk(UVAExchange mockedResult) {
+		stubRepositoryUpdateOk(mockedResult);
+	}
+
+	@Override
+	public void stubRepositoryCreateServerError(UVAExchange mockedResult) {
+		stubRepositoryUpdateError(mockedResult);
+		
+	}
+
+	@Override
+	public void stubRepositoryCreateUknownError(UVAExchange mockedResult) {
+		stubRepositoryUpdateUknownError(mockedResult);
+	}
+
+	@Override
+	public void stubRepositoryUpdateUknownError(UVAExchange mockedResult) {
+		stubRepositoryUpdateError(mockedResult);
+		
+	}
+
+	@Override
+	public void stubRepositoryDeleteUknownError(UVAExchange mockedResult) {
+		stubRepositoryDeleteError(mockedResult);
+		
+	}
+
+	@Override
+	public void stubRepositoryDeleteNotFoundError(UVAExchange mockedResult) {
+		throw new UnsupportedOperationException();		
 	}
 
 }
