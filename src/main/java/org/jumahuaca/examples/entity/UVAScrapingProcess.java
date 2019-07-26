@@ -19,8 +19,7 @@ public class UVAScrapingProcess implements Cloneable, Serializable {
 	private static final long serialVersionUID = 1914447716609987697L;
 
 	@Id
-	@SequenceGenerator(name = "process_id", sequenceName = "process_id", allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "process_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Integer id;
 
