@@ -27,8 +27,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.jumahuaca.examples.controller.UVAExchangeController;
 import org.jumahuaca.examples.entity.UVAExchange;
 import org.jumahuaca.examples.repository.UvaExchangeRepository;
-import org.jumahuaca.extensions.SpringControllerCrudExtension;
 import org.jumahuaca.extensions.HttpWebServiceDoubleHelper;
+import org.jumahuaca.extensions.SpringControllerCrudExtension;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -52,7 +52,7 @@ public class SpringExchangeRestControllerTests implements HttpWebServiceDoubleHe
 	private MockMvc mockMvc;
 
 	@MockBean
-	private UvaExchangeRepository uvaExchangeRepository;
+	private UvaExchangeRepository exchangeRepository;
 
 	@Autowired
 	private ObjectMapper objectMapper;
@@ -185,30 +185,30 @@ public class SpringExchangeRestControllerTests implements HttpWebServiceDoubleHe
 
 	@Override
 	public void stubRepositoryFindAllOk(List<UVAExchange> mockedResult) {
-		when(uvaExchangeRepository.findAll()).thenReturn(mockedResult);
+		when(exchangeRepository.findAll()).thenReturn(mockedResult);
 	}
 
 	@Override
 	public void stubRepositoryFindAllNotFound() {
 		List<UVAExchange> emptyResult = new ArrayList<UVAExchange>();
-		when(uvaExchangeRepository.findAll()).thenReturn(emptyResult);
+		when(exchangeRepository.findAll()).thenReturn(emptyResult);
 	}
 
 	@Override
 	public void stubRepositoryFindAllError() {
 		List<UVAExchange> emptyResult = null;
-		when(uvaExchangeRepository.findAll()).thenReturn(emptyResult);
+		when(exchangeRepository.findAll()).thenReturn(emptyResult);
 	}
 
 	@Override
 	public void stubRepositoryFindByIdOk(UVAExchange mockedResult) {
-		when(uvaExchangeRepository.findById(mockedResult.getDate())).thenReturn(Optional.of(mockedResult));
+		when(exchangeRepository.findById(mockedResult.getDate())).thenReturn(Optional.of(mockedResult));
 	}
 
 	@Override
 	public void stubRepositoryFindByIdNotFound(UVAExchange mockedResult) {
 		Optional<UVAExchange> nullResult = Optional.ofNullable(null);
-		when(uvaExchangeRepository.findById(mockedResult.getDate())).thenReturn(nullResult);
+		when(exchangeRepository.findById(mockedResult.getDate())).thenReturn(nullResult);
 	}
 
 	@Override
@@ -218,22 +218,22 @@ public class SpringExchangeRestControllerTests implements HttpWebServiceDoubleHe
 
 	@Override
 	public void stubRepositoryUpdateOk(UVAExchange mockedResult) {
-		when(uvaExchangeRepository.save(mockedResult)).thenReturn(mockedResult);
+		when(exchangeRepository.save(mockedResult)).thenReturn(mockedResult);
 	}
 
 	@Override
 	public void stubRepositoryUpdateError(UVAExchange mockedResult) {
-		when(uvaExchangeRepository.save(mockedResult)).thenThrow(RuntimeException.class);
+		when(exchangeRepository.save(mockedResult)).thenThrow(RuntimeException.class);
 	}
 
 	@Override
 	public void stubRepositoryDeleteOk(UVAExchange mockedResult) {
-		doNothing().when(uvaExchangeRepository).delete(mockedResult);
+		doNothing().when(exchangeRepository).delete(mockedResult);
 	}
 
 	@Override
 	public void stubRepositoryDeleteError(UVAExchange mockedResult) {
-		doThrow(RuntimeException.class).when(uvaExchangeRepository).delete(mockedResult);
+		doThrow(RuntimeException.class).when(exchangeRepository).delete(mockedResult);
 	}
 
 	@Override

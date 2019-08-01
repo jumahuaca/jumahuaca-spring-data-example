@@ -5,20 +5,17 @@ import static org.jumahuaca.assertions.HttpResponseStatusAssert.assertResponse50
 import static org.jumahuaca.examples.controller.PathConstants.UVA_SCRAPER_POST_PATH;
 import static org.jumahuaca.examples.controller.PathConstants.UVA_SCRAPER_ROOT_PATH;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 import javax.servlet.http.HttpServletResponse;
 
 import org.jumahuaca.examples.beans.MonthYear;
 import org.jumahuaca.examples.controller.PathConstants;
 import org.jumahuaca.examples.controller.UVAScraperController;
-import org.jumahuaca.examples.entity.UVAExchange;
 import org.jumahuaca.examples.entity.UVAScrapingProcess;
 import org.jumahuaca.examples.entity.UVAScrapingProcessStatus;
 import org.jumahuaca.examples.repository.UVAScrapingProcessRepository;
@@ -27,12 +24,6 @@ import org.jumahuaca.examples.scraper.UVAScraper;
 import org.jumahuaca.examples.service.UVAScrapingService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.internal.stubbing.answers.AnswersWithDelay;
-import org.mockito.internal.stubbing.answers.Returns;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
-
-import static org.mockito.AdditionalAnswers.answerVoid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -64,9 +55,6 @@ public class SpringScraperResourceTests {
 	@MockBean
 	private UVAScrapingProcessRepository uvaScrapingProcessRepository;
 	
-	private static final int ESTIMATED_TIME_TO_COMPLETE = 5000;
-
-
 	private static final String PREFIX = PathConstants.RESOURCE_VERSION+UVA_SCRAPER_ROOT_PATH;
 	
 	
@@ -132,16 +120,6 @@ public class SpringScraperResourceTests {
 		.when(service).programScrapping(any(MonthYear.class), any(UVAScraper.class), any(UVAScrapingProcess.class));
 	}
 
-//	private void stubCreateUvaOk() {
-//		when(uvaExchangeRepository.save(any(UVAExchange.class))).thenReturn(value);
-//		
-//	}
-
-	private void stubFindUvaNotFound() {
-		Optional<UVAExchange> result = Optional.empty();
-		when(uvaExchangeRepository.findById(any(LocalDate.class))).thenReturn(result);
-		
-	}
 
 	private void stubProcessCreateOk(UVAScrapingProcess process) throws CloneNotSupportedException {
 		UVAScrapingProcess cloned = (UVAScrapingProcess) process.clone();
@@ -149,8 +127,4 @@ public class SpringScraperResourceTests {
 		when(uvaScrapingProcessRepository.save(process)).thenReturn(cloned);
 	}
 	
-	private void stubProcessUpdateOk(UVAScrapingProcess process) throws CloneNotSupportedException {
-		when(uvaScrapingProcessRepository.save(process)).thenReturn(process);
-	}
-
 }

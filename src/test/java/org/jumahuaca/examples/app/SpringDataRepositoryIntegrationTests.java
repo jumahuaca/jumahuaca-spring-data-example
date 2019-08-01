@@ -9,6 +9,7 @@ import java.time.Month;
 import java.util.List;
 import java.util.Optional;
 
+import org.jumahuaca.examples.config.Configuration;
 import org.jumahuaca.examples.entity.UVAExchange;
 import org.jumahuaca.examples.repository.UvaExchangeRepository;
 import org.jumahuaca.util.IntegrationTest;
@@ -17,10 +18,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
+@Import({SpringUvaApiApplication.class,Configuration.class})
+
 public class SpringDataRepositoryIntegrationTests {
 
 	private static final int TEST_YEAR_1 = 2018;

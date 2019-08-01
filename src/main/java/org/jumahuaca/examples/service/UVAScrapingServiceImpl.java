@@ -22,6 +22,17 @@ public class UVAScrapingServiceImpl implements UVAScrapingService{
 	
 	@Autowired
 	private UvaExchangeRepository exchangeRepository;
+	
+	public UVAScrapingServiceImpl() {
+		super();
+	}
+
+	public UVAScrapingServiceImpl(UVAScrapingProcessRepository scrapingProcessRepository,
+			UvaExchangeRepository exchangeRepository) {
+		super();
+		this.scrapingProcessRepository = scrapingProcessRepository;
+		this.exchangeRepository = exchangeRepository;
+	}
 
 	@Async
 	@Override
