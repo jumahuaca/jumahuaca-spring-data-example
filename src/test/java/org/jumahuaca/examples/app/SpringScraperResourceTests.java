@@ -74,8 +74,8 @@ public class SpringScraperResourceTests {
 		process.setStatus(UVAScrapingProcessStatus.CREATED.name());
 		process.setProcessDate(LocalDateTime.now());
 		
-		stubProcessCreateOk(process);
-		stubServiceOk(monthYear,process);
+		mockProcessCreateOk(process);
+		mockServiceOk(monthYear,process);
 		
 		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post(PREFIX+UVA_SCRAPER_POST_PATH)
 				.contentType(MediaType.APPLICATION_JSON_UTF8).accept(MediaType.APPLICATION_JSON_UTF8)
@@ -98,7 +98,7 @@ public class SpringScraperResourceTests {
 		process.setStatus(UVAScrapingProcessStatus.CREATED.name());
 		process.setProcessDate(LocalDateTime.now());
 		
-		stubProcessCreateError(process);
+		mockProcessCreateError(process);
 		
 		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post(PREFIX+UVA_SCRAPER_POST_PATH)
 				.contentType(MediaType.APPLICATION_JSON_UTF8).accept(MediaType.APPLICATION_JSON_UTF8)
@@ -110,18 +110,18 @@ public class SpringScraperResourceTests {
 		
 	}
 	
-	private void stubProcessCreateError(UVAScrapingProcess process) {
+	private void mockProcessCreateError(UVAScrapingProcess process) {
 		when(uvaScrapingProcessRepository.save(process)).thenThrow(RuntimeException.class);
 		
 	}
 
-	private void stubServiceOk(MonthYear monthYear,UVAScrapingProcess process) {
+	private void mockServiceOk(MonthYear monthYear,UVAScrapingProcess process) {
 		doNothing()
 		.when(service).programScrapping(any(MonthYear.class), any(UVAScraper.class), any(UVAScrapingProcess.class));
 	}
 
 
-	private void stubProcessCreateOk(UVAScrapingProcess process) throws CloneNotSupportedException {
+	private void mockProcessCreateOk(UVAScrapingProcess process) throws CloneNotSupportedException {
 		UVAScrapingProcess cloned = (UVAScrapingProcess) process.clone();
 		cloned.setId(1);
 		when(uvaScrapingProcessRepository.save(process)).thenReturn(cloned);

@@ -184,29 +184,29 @@ public class SpringExchangeRestControllerTests implements HttpWebServiceDoubleHe
 	}
 
 	@Override
-	public void stubRepositoryFindAllOk(List<UVAExchange> mockedResult) {
+	public void mockRepositoryFindAllOk(List<UVAExchange> mockedResult) {
 		when(exchangeRepository.findAll()).thenReturn(mockedResult);
 	}
 
 	@Override
-	public void stubRepositoryFindAllNotFound() {
+	public void mockRepositoryFindAllNotFound() {
 		List<UVAExchange> emptyResult = new ArrayList<UVAExchange>();
 		when(exchangeRepository.findAll()).thenReturn(emptyResult);
 	}
 
 	@Override
-	public void stubRepositoryFindAllError() {
+	public void mockRepositoryFindAllError() {
 		List<UVAExchange> emptyResult = null;
 		when(exchangeRepository.findAll()).thenReturn(emptyResult);
 	}
 
 	@Override
-	public void stubRepositoryFindByIdOk(UVAExchange mockedResult) {
+	public void mockRepositoryFindByIdOk(UVAExchange mockedResult) {
 		when(exchangeRepository.findById(mockedResult.getDate())).thenReturn(Optional.of(mockedResult));
 	}
 
 	@Override
-	public void stubRepositoryFindByIdNotFound(UVAExchange mockedResult) {
+	public void mockRepositoryFindByIdNotFound(UVAExchange mockedResult) {
 		Optional<UVAExchange> nullResult = Optional.ofNullable(null);
 		when(exchangeRepository.findById(mockedResult.getDate())).thenReturn(nullResult);
 	}
@@ -217,60 +217,60 @@ public class SpringExchangeRestControllerTests implements HttpWebServiceDoubleHe
 	}
 
 	@Override
-	public void stubRepositoryUpdateOk(UVAExchange mockedResult) {
+	public void mockRepositoryUpdateOk(UVAExchange mockedResult) {
 		when(exchangeRepository.save(mockedResult)).thenReturn(mockedResult);
 	}
 
 	@Override
-	public void stubRepositoryUpdateError(UVAExchange mockedResult) {
+	public void mockRepositoryUpdateError(UVAExchange mockedResult) {
 		when(exchangeRepository.save(mockedResult)).thenThrow(RuntimeException.class);
 	}
 
 	@Override
-	public void stubRepositoryDeleteOk(UVAExchange mockedResult) {
+	public void mockRepositoryDeleteOk(UVAExchange mockedResult) {
 		doNothing().when(exchangeRepository).delete(mockedResult);
 	}
 
 	@Override
-	public void stubRepositoryDeleteError(UVAExchange mockedResult) {
+	public void mockRepositoryDeleteError(UVAExchange mockedResult) {
 		doThrow(RuntimeException.class).when(exchangeRepository).delete(mockedResult);
 	}
 
 	@Override
-	public void stubRepositoryFindByIdError(UVAExchange mockedResult) {
+	public void mockRepositoryFindByIdError(UVAExchange mockedResult) {
 		throw new UnsupportedOperationException();		
 	}
 
 	@Override
-	public void stubRepositoryCreateOk(UVAExchange mockedResult) {
-		stubRepositoryUpdateOk(mockedResult);
+	public void mockRepositoryCreateOk(UVAExchange mockedResult) {
+		mockRepositoryUpdateOk(mockedResult);
 	}
 
 	@Override
-	public void stubRepositoryCreateServerError(UVAExchange mockedResult) {
-		stubRepositoryUpdateError(mockedResult);
+	public void mockRepositoryCreateServerError(UVAExchange mockedResult) {
+		mockRepositoryUpdateError(mockedResult);
 		
 	}
 
 	@Override
-	public void stubRepositoryCreateUknownError(UVAExchange mockedResult) {
-		stubRepositoryUpdateUknownError(mockedResult);
+	public void mockRepositoryCreateUknownError(UVAExchange mockedResult) {
+		mockRepositoryUpdateUknownError(mockedResult);
 	}
 
 	@Override
-	public void stubRepositoryUpdateUknownError(UVAExchange mockedResult) {
-		stubRepositoryUpdateError(mockedResult);
+	public void mockRepositoryUpdateUknownError(UVAExchange mockedResult) {
+		mockRepositoryUpdateError(mockedResult);
 		
 	}
 
 	@Override
-	public void stubRepositoryDeleteUknownError(UVAExchange mockedResult) {
-		stubRepositoryDeleteError(mockedResult);
+	public void mockRepositoryDeleteUknownError(UVAExchange mockedResult) {
+		mockRepositoryDeleteError(mockedResult);
 		
 	}
 
 	@Override
-	public void stubRepositoryDeleteNotFoundError(UVAExchange mockedResult) {
+	public void mockRepositoryDeleteNotFoundError(UVAExchange mockedResult) {
 		throw new UnsupportedOperationException();		
 	}
 

@@ -65,8 +65,8 @@ public class SpringScraperServiceTests {
 	@IntegrationTest
 	public void testServiceScraperWithScrapingShouldWork() {
 		MonthYear monthYear = new MonthYear(TEST_MONTH, TEST_YEAR);
-		stubProcessUpdate(mockedProcess);
-		stubFindUvaNotFound();
+		mockProcessUpdate(mockedProcess);
+		mockFindUvaNotFound();
 		service.programScrapping(monthYear, scraper, mockedProcess);
 		verifyAllUvas(fakedUvaExchanges);
 	}
@@ -74,8 +74,8 @@ public class SpringScraperServiceTests {
 	@IntegrationTest
 	public void testServiceScraperWithScrapingShouldReWrite() {
 		MonthYear monthYear = new MonthYear(TEST_MONTH, TEST_YEAR);
-		stubProcessUpdate(mockedProcess);
-		stubFindUvaFound(fakedUvaExchanges);
+		mockProcessUpdate(mockedProcess);
+		mockFindUvaFound(fakedUvaExchanges);
 		service.programScrapping(monthYear, scraper, mockedProcess);
 		verifyDeleteUvas(fakedUvaExchanges);
 		verifyAllUvas(fakedUvaExchanges);
@@ -84,9 +84,9 @@ public class SpringScraperServiceTests {
 	@Test
 	public void testServiceScraperWithoutScrapingShouldWork() throws FailingHttpStatusCodeException, MalformedURLException, IOException {
 		MonthYear monthYear = new MonthYear(TEST_MONTH, TEST_YEAR);
-		stubProcessUpdate(mockedProcess);
-		stubFindUvaNotFound();
-		stubScraping(TEST_YEAR, TEST_MONTH);
+		mockProcessUpdate(mockedProcess);
+		mockFindUvaNotFound();
+		mockScraping(TEST_YEAR, TEST_MONTH);
 		service.programScrapping(monthYear, mockedScraper, mockedProcess);
 		verifyAllUvas(fakedUvaExchanges);
 	}
@@ -95,16 +95,16 @@ public class SpringScraperServiceTests {
 	@Test
 	public void testServiceScraperWithoutScrapingShouldReWrite() throws FailingHttpStatusCodeException, MalformedURLException, IOException {
 		MonthYear monthYear = new MonthYear(TEST_MONTH, TEST_YEAR);
-		stubProcessUpdate(mockedProcess);
-		stubFindUvaFound(fakedUvaExchanges);
-		stubScraping(TEST_YEAR, TEST_MONTH);
+		mockProcessUpdate(mockedProcess);
+		mockFindUvaFound(fakedUvaExchanges);
+		mockScraping(TEST_YEAR, TEST_MONTH);
 		service.programScrapping(monthYear, mockedScraper, mockedProcess);
 		verifyDeleteUvas(fakedUvaExchanges);
 		verifyAllUvas(fakedUvaExchanges);
 	}
 	
 
-	private void stubScraping(Integer year, Integer month)
+	private void mockScraping(Integer year, Integer month)
 			throws FailingHttpStatusCodeException, MalformedURLException, IOException {
 		when(mockedScraper.scrap(year, month)).thenReturn(fakedUvaExchanges);
 
@@ -122,17 +122,17 @@ public class SpringScraperServiceTests {
 		}
 	}
 
-	private void stubProcessUpdate(UVAScrapingProcess mockedProcess) {
+	private void mockProcessUpdate(UVAScrapingProcess mockedProcess) {
 		when(scrapingProcessRepository.save(mockedProcess)).thenReturn(mockedProcess);
 
 	}
 
-	private void stubFindUvaNotFound() {
+	private void mockFindUvaNotFound() {
 		Optional<UVAExchange> result = Optional.empty();
 		when(exchangeRepository.findById(any(LocalDate.class))).thenReturn(result);
 	}
 
-	private void stubFindUvaFound(List<UVAExchange> fakedUvaExchanges) {
+	private void mockFindUvaFound(List<UVAExchange> fakedUvaExchanges) {
 		for (UVAExchange uvaExchange : fakedUvaExchanges) {
 			Optional<UVAExchange> result = Optional.of(uvaExchange);
 			when(exchangeRepository.findById(uvaExchange.getDate())).thenReturn(result);
@@ -142,8 +142,6 @@ public class SpringScraperServiceTests {
 
 	private static List<UVAExchange> fakeSomeUVAExchanges() {
 		List<UVAExchange> exchanges = new ArrayList<UVAExchange>();
-//		exchanges.add(new UVAExchange(LocalDate.parse("16/05/2019", DateTimeFormatter.ofPattern("dd/MM/yyyy")),
-//				BigDecimal.valueOf(36.3)));
 		exchanges.add(new UVAExchange(LocalDate.parse("15/05/2016", DateTimeFormatter.ofPattern("dd/MM/yyyy")),
 				BigDecimal.valueOf(14.61)));
 		exchanges.add(new UVAExchange(LocalDate.parse("14/05/2016", DateTimeFormatter.ofPattern("dd/MM/yyyy")),
