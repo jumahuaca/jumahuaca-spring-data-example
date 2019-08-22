@@ -9,6 +9,8 @@ import java.time.Month;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.jumahuaca.examples.config.Configuration;
 import org.jumahuaca.examples.entity.UVAExchange;
 import org.jumahuaca.examples.repository.UvaExchangeRepository;
@@ -24,7 +26,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
 @Import({SpringUvaApiApplication.class,Configuration.class})
-
 public class SpringDataRepositoryIntegrationTests {
 
 	private static final int TEST_YEAR_1 = 2018;
@@ -65,13 +66,14 @@ public class SpringDataRepositoryIntegrationTests {
 	@Autowired
 	private UvaExchangeRepository repository;
 
+	@Transactional
 	@BeforeEach
 	public void setup() throws Exception {
 		UVAExchange exchange1 = new UVAExchange(LocalDate.of(TEST_YEAR_1, TEST_MONTH_1, TEST_DAY_1), TEST_RATE_1);
 		UVAExchange exchange2 = new UVAExchange(LocalDate.of(TEST_YEAR_2, TEST_MONTH_2, TEST_DAY_2), TEST_RATE_2);
 		entityManager.persist(exchange1);
 		entityManager.persist(exchange2);
-		entityManager.flush();
+//		entityManager.flush();
 	}
 
 	@IntegrationTest
