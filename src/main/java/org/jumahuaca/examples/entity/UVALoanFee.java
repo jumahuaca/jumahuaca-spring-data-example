@@ -2,6 +2,7 @@ package org.jumahuaca.examples.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -21,6 +22,9 @@ public class UVALoanFee implements Serializable {
 	
 	@Column(name = "loan_id", insertable=false, updatable=false)
 	private Integer loanId;
+	
+	@Column(name = "fee_date")
+	private LocalDate feeDate;
 
 	@Column(name = "initial_capital")
 	private BigDecimal initialCapital;
@@ -114,6 +118,14 @@ public class UVALoanFee implements Serializable {
 
 	public void setLoan(UVALoan loan) {
 		this.loan = loan;
+	}
+	
+	public LocalDate getFeeDate() {
+		return feeDate;
+	}
+
+	public void setFeeDate(LocalDate feeDate) {
+		this.feeDate = feeDate;
 	}
 
 	@Override

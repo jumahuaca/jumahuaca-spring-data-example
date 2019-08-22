@@ -4,6 +4,7 @@ import static org.jumahuaca.examples.controller.PathConstants.BATCH_ROOT_PATH;
 import static org.jumahuaca.examples.controller.PathConstants.RESOURCE_VERSION;
 import static org.jumahuaca.examples.controller.PathConstants.UVA_UPDATE_FEES_POST_PATH;
 
+import java.util.Date;
 import java.util.logging.Logger;
 
 import org.springframework.batch.core.Job;
@@ -40,6 +41,7 @@ public class BatchController {
 	public ResponseEntity<String> updateFeed(@RequestBody Integer loanId) {
 		JobParameters jobParameters = new JobParametersBuilder()
             	.addLong("loanId", Long.valueOf(loanId))
+            	.addDate("date", new Date())
             	.toJobParameters();
             try {
 				jobLauncher.run(feeUpdateJob, jobParameters);
