@@ -5,6 +5,7 @@ import org.springframework.batch.core.configuration.annotation.EnableBatchProces
 import org.springframework.batch.test.JobLauncherTestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -14,7 +15,7 @@ public class SpringBatchTestConfiguration {
 	
 	@Autowired
     @Qualifier("feeUpdateJob")
-    Job feeUpdateJob;    
+    private Job feeUpdateJob;    
 
 	@Bean
 	public JobLauncherTestUtils utils() throws Exception {

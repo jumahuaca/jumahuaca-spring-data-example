@@ -17,7 +17,7 @@ public class UVALoanFeeUpdateWriter implements ItemWriter<UVALoanFee>{
 	private UVALoanFeeRepository repository;
 
 	@Override
-	@Transactional
+//	@Transactional
 	public void write(List<? extends UVALoanFee> items) throws Exception {
 		for (UVALoanFee uvaLoanFee : items) {
 			repository.save(uvaLoanFee);
