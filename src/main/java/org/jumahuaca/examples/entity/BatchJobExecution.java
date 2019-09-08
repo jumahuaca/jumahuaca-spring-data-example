@@ -5,7 +5,10 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
@@ -15,6 +18,8 @@ public class BatchJobExecution implements Serializable {
 	private static final long serialVersionUID = -3704003567594236886L;
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "BATCH_JOB_EXECUTION_SEQ_GEN")
+	@SequenceGenerator(name="BATCH_JOB_EXECUTION_SEQ_GEN", sequenceName = "BATCH_JOB_EXECUTION_SEQ")
 	@Column(name = "JOB_EXECUTION_ID")
 	private Long jobExecutionId;
 

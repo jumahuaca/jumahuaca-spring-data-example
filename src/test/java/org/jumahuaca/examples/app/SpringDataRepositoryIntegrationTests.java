@@ -73,7 +73,6 @@ public class SpringDataRepositoryIntegrationTests {
 		UVAExchange exchange2 = new UVAExchange(LocalDate.of(TEST_YEAR_2, TEST_MONTH_2, TEST_DAY_2), TEST_RATE_2);
 		entityManager.persist(exchange1);
 		entityManager.persist(exchange2);
-//		entityManager.flush();
 	}
 
 	@IntegrationTest

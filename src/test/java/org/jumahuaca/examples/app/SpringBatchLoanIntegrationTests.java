@@ -1,12 +1,12 @@
 package org.jumahuaca.examples.app;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Date;
-
-import javax.transaction.Transactional;
+import java.util.List;
 
 import org.jumahuaca.examples.config.Configuration;
 import org.jumahuaca.examples.entity.UVAExchange;
@@ -15,7 +15,6 @@ import org.jumahuaca.examples.entity.UVALoanFee;
 import org.jumahuaca.examples.entity.UVALoanFeeId;
 import org.jumahuaca.util.IntegrationTest;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.JobParametersBuilder;
 import org.springframework.batch.test.JobLauncherTestUtils;
@@ -24,10 +23,12 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
-@ExtendWith(SpringExtension.class)
 @DataJpaTest
+//@Transactional(propagation=Propagation.SUPPORTS)
+@Transactional(propagation = Propagation.NEVER)
 @ComponentScan({ "org.jumahuaca.examples.batch"})
 @Import({SpringUvaApiApplication.class,Configuration.class,SpringBatchTestConfiguration.class})
 public class SpringBatchLoanIntegrationTests {
@@ -67,6 +68,18 @@ public class SpringBatchLoanIntegrationTests {
 	private static final BigDecimal FEE_1_FINAL_TOTAL = BigDecimal.valueOf(5694.512124);
 
 	private static final BigDecimal FEE_1_FINAL_INTEREST = BigDecimal.valueOf(9051.460459);
+	
+	private static final BigDecimal FEE_2_FINAL_CAPITAL = BigDecimal.valueOf(3417.36);		
+
+	private static final BigDecimal FEE_2_FINAL_INTEREST = BigDecimal.valueOf(3437.35);
+
+	private static final BigDecimal FEE_2_FINAL_TOTAL = BigDecimal.valueOf(6854.71);
+	
+	private static final BigDecimal FEE_3_FINAL_CAPITAL = BigDecimal.valueOf(3481.36);
+
+	private static final BigDecimal FEE_3_FINAL_INTEREST = BigDecimal.valueOf(3481.43);
+
+	private static final BigDecimal FEE_3_FINAL_TOTAL = BigDecimal.valueOf(6962.79);
 	
 	private static final Integer FEE_NUMBER_2 = 2;
 
@@ -133,10 +146,11 @@ public class SpringBatchLoanIntegrationTests {
 	
 	 @Autowired
 	 private JobLauncherTestUtils jobLauncherTestUtils;
-	
-	@Transactional
+	 
 	@BeforeEach
+	//@Transactional
 	public void setup() throws Exception {
+		entityManager.getEntityManager().getTransaction().begin();
 		UVALoan loan = new UVALoan();
 		loan.setCoholderDNI(COHOLDER_DNI);
 		loan.setHolderDNI(HOLDER_DNI);
@@ -187,19 +201,32 @@ public class SpringBatchLoanIntegrationTests {
 		entityManager.persist(exchange1);
 		entityManager.persist(exchange2);
 		entityManager.persist(exchange3);
-//		entityManager.flush();		
+		entityManager.getEntityManager().getTransaction().commit();
 	}
 	
+	@SuppressWarnings("unchecked")
 	@IntegrationTest
-	@Transactional
+	//@Transactional(propagation=Propagation.REQUIRES_NEW)
+	//@Transactional(propagation = Propagation.NOT_SUPPORTED)
 	public void testRunJobShouldCompleteOk() throws Exception {
-		JobParameters jobParameters = new JobParametersBuilder()
-            	.addLong("loanId", Long.valueOf(LOAN_ID))
-            	.addDate("date", new Date())
-            	.toJobParameters();
+		JobParameters jobParameters = new JobParametersBuilder().addLong("loanId", Long.valueOf(LOAN_ID))
+				.addDate("date", new Date()).toJobParameters();
+		//jobLauncherTestUtils.setJobLauncher(new AsyncJobLauncher(jobLauncherTestUtils.getJobLauncher()));
 		jobLauncherTestUtils.launchJob(jobParameters);
-		assertNotNull(jobLauncherTestUtils);
+		List<UVALoanFee> fees = (List<UVALoanFee>) entityManager.getEntityManager()
+				.createQuery("from UVALoanFee f where f.id.loanId = :loanId").setParameter("loanId", LOAN_ID)
+				.getResultList();
 		
+		assertNotNull(fees);
+		assertThat(fees.get(0).getFinalCapital()).isEqualTo(FEE_1_FINAL_CAPITAL);
+		assertThat(fees.get(0).getFinalInterest()).isEqualTo(FEE_1_FINAL_INTEREST);
+		assertThat(fees.get(0).getFinalTotal()).isEqualTo(FEE_1_FINAL_TOTAL);
+		assertThat(fees.get(1).getFinalCapital()).isEqualTo(FEE_2_FINAL_CAPITAL);
+		assertThat(fees.get(1).getFinalInterest()).isEqualTo(FEE_2_FINAL_INTEREST);
+		assertThat(fees.get(1).getFinalTotal()).isEqualTo(FEE_2_FINAL_TOTAL);
+		assertThat(fees.get(2).getFinalCapital()).isEqualTo(FEE_3_FINAL_CAPITAL);
+		assertThat(fees.get(2).getFinalInterest()).isEqualTo(FEE_3_FINAL_INTEREST);
+		assertThat(fees.get(2).getFinalTotal()).isEqualTo(FEE_3_FINAL_TOTAL);
 	}
 	
 }

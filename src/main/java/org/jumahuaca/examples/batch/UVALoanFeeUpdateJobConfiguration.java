@@ -44,7 +44,5 @@ public class UVALoanFeeUpdateJobConfiguration {
 				.start(step())
 				.build();
 	}
-	
-
 
 }

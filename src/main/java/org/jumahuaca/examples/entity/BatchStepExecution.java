@@ -5,7 +5,10 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
@@ -16,6 +19,8 @@ public class BatchStepExecution implements Serializable {
 
 	@Id
 	@Column(name = "STEP_EXECUTION_ID")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "BATCH_STEP_EXECUTION_SEQ_GEN")
+	@SequenceGenerator(name="BATCH_STEP_EXECUTION_SEQ_GEN", sequenceName = "BATCH_STEP_EXECUTION_SEQ")
 	private Long stepExecutionId;
 
 	@Column(name = "VERSION")
