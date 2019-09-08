@@ -19,10 +19,10 @@ public class UVALoanFee implements Serializable {
 
 	@EmbeddedId
 	private UVALoanFeeId id;
-	
-	@Column(name = "loan_id", insertable=false, updatable=false)
+
+	@Column(name = "loan_id", insertable = false, updatable = false)
 	private Integer loanId;
-	
+
 	@Column(name = "fee_date")
 	private LocalDate feeDate;
 
@@ -55,7 +55,7 @@ public class UVALoanFee implements Serializable {
 	public void setId(UVALoanFeeId id) {
 		this.id = id;
 	}
-	
+
 	public Integer getLoanId() {
 		return loanId;
 	}
@@ -119,7 +119,7 @@ public class UVALoanFee implements Serializable {
 	public void setLoan(UVALoan loan) {
 		this.loan = loan;
 	}
-	
+
 	public LocalDate getFeeDate() {
 		return feeDate;
 	}
@@ -132,7 +132,15 @@ public class UVALoanFee implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((feeDate == null) ? 0 : feeDate.hashCode());
+		result = prime * result + ((finalCapital == null) ? 0 : finalCapital.hashCode());
+		result = prime * result + ((finalInterest == null) ? 0 : finalInterest.hashCode());
+		result = prime * result + ((finalTotal == null) ? 0 : finalTotal.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((initialCapital == null) ? 0 : initialCapital.hashCode());
+		result = prime * result + ((initialInterest == null) ? 0 : initialInterest.hashCode());
+		result = prime * result + ((initialTotal == null) ? 0 : initialTotal.hashCode());
+		result = prime * result + ((loan == null) ? 0 : loan.hashCode());
 		return result;
 	}
 
@@ -145,12 +153,62 @@ public class UVALoanFee implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		UVALoanFee other = (UVALoanFee) obj;
+		if (feeDate == null) {
+			if (other.feeDate != null)
+				return false;
+		} else if (!feeDate.equals(other.feeDate))
+			return false;
+		if (finalCapital == null) {
+			if (other.finalCapital != null)
+				return false;
+		} else if (!finalCapital.equals(other.finalCapital))
+			return false;
+		if (finalInterest == null) {
+			if (other.finalInterest != null)
+				return false;
+		} else if (!finalInterest.equals(other.finalInterest))
+			return false;
+		if (finalTotal == null) {
+			if (other.finalTotal != null)
+				return false;
+		} else if (!finalTotal.equals(other.finalTotal))
+			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
+		if (initialCapital == null) {
+			if (other.initialCapital != null)
+				return false;
+		} else if (!initialCapital.equals(other.initialCapital))
+			return false;
+		if (initialInterest == null) {
+			if (other.initialInterest != null)
+				return false;
+		} else if (!initialInterest.equals(other.initialInterest))
+			return false;
+		if (initialTotal == null) {
+			if (other.initialTotal != null)
+				return false;
+		} else if (!initialTotal.equals(other.initialTotal))
+			return false;
+		if (loan == null) {
+			if (other.loan != null)
+				return false;
+		} else if (!loan.equals(other.loan))
+			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return "UVALoanFee [id=" + id + ", loanId=" + loanId + ", feeDate=" + feeDate + ", initialCapital="
+				+ initialCapital + ", initialInterest=" + initialInterest + ", initialTotal=" + initialTotal
+				+ ", finalCapital=" + finalCapital + ", finalInterest=" + finalInterest + ", finalTotal=" + finalTotal
+				+ ", loan=" + loan + "]";
+	}
+	
+	
 
 }

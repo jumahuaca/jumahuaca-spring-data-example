@@ -14,6 +14,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class UVALoanFeeUpdateProcessor implements ItemProcessor<UVALoanFee,UVALoanFee>{
 	
+	private static final int ROUNDING_DECIMALS = 2;
+
 	private static final int DECIMALS = 6;
 	
 	@Autowired
@@ -32,9 +34,9 @@ public class UVALoanFeeUpdateProcessor implements ItemProcessor<UVALoanFee,UVALo
 			UVAExchange finalUva = uvaExchangeRepository.findById(feeDate).get();
 			BigDecimal capital = updateValue(item.getInitialCapital(),initialUva,finalUva);
 			BigDecimal interest = updateValue(item.getInitialInterest(),initialUva,finalUva);
-			item.setFinalCapital(capital);
-			item.setFinalInterest(interest);
-			item.setFinalTotal(capital.add(interest));
+			item.setFinalCapital(capital.setScale(ROUNDING_DECIMALS,RoundingMode.HALF_UP));
+			item.setFinalInterest(interest.setScale(ROUNDING_DECIMALS,RoundingMode.HALF_UP));
+			item.setFinalTotal(capital.add(interest).setScale(ROUNDING_DECIMALS,RoundingMode.HALF_UP));
 		} catch (Exception e) {
 			return null;
 		}
@@ -46,5 +48,11 @@ public class UVALoanFeeUpdateProcessor implements ItemProcessor<UVALoanFee,UVALo
 	private BigDecimal updateValue(BigDecimal value, UVAExchange initialUva, UVAExchange finalUva) {
 		return value.divide(initialUva.getRate(),DECIMALS,RoundingMode.HALF_UP).multiply(finalUva.getRate());
 	}
+
+	public void setUvaExchangeRepository(UvaExchangeRepository uvaExchangeRepository) {
+		this.uvaExchangeRepository = uvaExchangeRepository;
+	}
+	
+	
 
 }

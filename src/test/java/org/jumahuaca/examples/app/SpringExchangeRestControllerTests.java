@@ -27,7 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.jumahuaca.examples.controller.UVAExchangeController;
 import org.jumahuaca.examples.entity.UVAExchange;
 import org.jumahuaca.examples.repository.UvaExchangeRepository;
-import org.jumahuaca.extensions.HttpWebServiceDoubleHelper;
+import org.jumahuaca.extensions.HttpWebServiceTestDoubleHelper;
 import org.jumahuaca.extensions.SpringControllerCrudExtension;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -44,7 +44,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(UVAExchangeController.class)
-public class SpringExchangeRestControllerTests implements HttpWebServiceDoubleHelper<UVAExchange>{
+public class SpringExchangeRestControllerTests implements HttpWebServiceTestDoubleHelper<UVAExchange>{
 
 	private static final String PREFIX = RESOURCE_VERSION + UVA_EXCHANGE_ROOT_PATH;
 

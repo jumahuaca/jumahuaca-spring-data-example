@@ -24,4 +24,10 @@ public class UVALoanFeeUpdateWriter implements ItemWriter<UVALoanFee>{
 		}
 	}
 
+	public void setRepository(UVALoanFeeRepository repository) {
+		this.repository = repository;
+	}
+	
+	
+
 }

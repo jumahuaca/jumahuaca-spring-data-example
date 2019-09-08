@@ -39,7 +39,9 @@ public class UVALoanFeeUpdateReader implements ItemReader<UVALoanFee> {
 	public void setLoanId(final Long loanId) {
 		this.loanId = loanId;
 	}
-	
-	
+
+	public void setRepository(UVALoanFeeRepository repository) {
+		this.repository = repository;
+	}	
 
 }
