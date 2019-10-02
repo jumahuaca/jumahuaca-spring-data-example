@@ -19,7 +19,7 @@ import org.jumahuaca.examples.entity.UVALoanFeeId;
 import org.jumahuaca.examples.repository.UVALoanFeeRepository;
 import org.jumahuaca.examples.repository.UvaExchangeRepository;
 import org.jumahuaca.extensions.SpringBatchChunkExtension;
-import org.jumahuaca.extensions.SpringBatchChunkTestDoubleHelper;
+import org.jumahuaca.extensions.TestDoubleBatchHelper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -31,7 +31,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
-public class SpringBatchChunkUpdateFeesTests implements SpringBatchChunkTestDoubleHelper<UVALoanFee> {
+public class SpringBatchChunkUpdateFeesTests implements TestDoubleBatchHelper {
 
 	private static final Long COHOLDER_DNI = 31111111L;
 
@@ -306,4 +306,5 @@ public class SpringBatchChunkUpdateFeesTests implements SpringBatchChunkTestDoub
 	public void mockInjectionsWriteOk() {
 		writer.setRepository(feeRepository);
 	}
+
 }
